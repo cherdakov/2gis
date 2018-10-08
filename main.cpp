@@ -2,16 +2,24 @@
 #include <iostream>
 #include <vector>
 #include <cctype>
+#include <fstream>
+#include <unordered_map>
 #include <algorithm>
+
+static const std::string HELP_MODE = "help";
+static const std::string CHECKSUM_MODE = "checksum";
+static const std::string COUNT_WORDS_MODE = "words";
+static const std::string HELP_MESSAGE = "2gis one love?";
 
 class InputParser {
 public:
     InputParser(int argc, char **argv) {
-        for (int i = 1; i < argc; ++i)
+        for (int i = 1; i < argc; ++i) {
             this->tokens.emplace_back(argv[i]);
+        }
     }
 
-    const std::string &getOption(const std::string &option) const {
+    const std::string& getOption(const std::string& option) const {
         auto it = std::find(this->tokens.begin(), this->tokens.end(), option);
         if (it != this->tokens.end() && ++it != this->tokens.end()) {
             return *it;
@@ -59,44 +67,70 @@ uint32_t getFileCheckSum(const std::string &filename) {
     return 0;
 }
 
-int main(int argc, char **argv) {
-    InputParser input(argc, argv);
-    if (input.optionExists("-h")) {
-        std::cout << "2GIS test task help message" << std::endl;
-        return 0;
+class IllegalArgumentsException : public std::exception {
+private:
+    std::string message;
+public:
+    explicit IllegalArgumentsException(std::string message) : message(std::move(message)) {}
+
+    const std::string& getMessage() {
+        return message;
     }
-    std::string mode, filename;
-    if (input.optionExists("-m")) {
-        mode = input.getOption("-m");
-    } else {
-        std::cout << "Mode option does not exists" << std::endl;
-        return -1;
+
+    const char* what() {
+        return "IllegalArgumentsException";
     }
-    if (input.optionExists("-f")) {
-        filename = input.getOption("-f");
+};
+
+void parseArguments(const InputParser& inputParser, std::string& mode, std::string& filename, std::string& word) {
+    if (inputParser.optionExists("-h")) {
+        mode = "help";
+        return;
+    }
+    if (inputParser.optionExists("-m")) {
+        mode = inputParser.getOption("-m");
     } else {
-        std::cout << "Filename option does not exists" << std::endl;
-        return -1;
+        throw IllegalArgumentsException("Mode option does not exists");
+    }
+    if (inputParser.optionExists("-f")) {
+        filename = inputParser.getOption("-f");
+    } else {
+        throw IllegalArgumentsException("Filename option does not exists");
     }
     if ("words" != mode && "checksum" != mode) {
-        std::cout << "Incorrect mode" << std::endl;
-        return -1;
+        throw IllegalArgumentsException("Incorrect mode");
     }
     if ("words" == mode) {
-        if (!input.optionExists("-v")) {
-            std::cout << "-v required for this mode" << std::endl;
-            return -1;
+        if (!inputParser.optionExists("-v")) {
+            throw IllegalArgumentsException("-v required for this mode");
         }
-        std::string word = input.getOption("-v");
+        word = inputParser.getOption("-v");
         if (word.empty()) {
-            std::cout << "word is empty" << std::endl;
-            return -1;
+            throw IllegalArgumentsException("word is empty");
         }
-        uint32_t countWords = getCountWordsInFile(filename, word);
-        std::cout << "countWords: " << countWords << std::endl;
-    } else if ("checksum" == mode) {
-        uint32_t checksum = getFileCheckSum(filename);
-        std::cout << "checksum:" << checksum << std::endl;
+    }
+}
+
+int main(int argc, char **argv) {
+    InputParser inputParser(argc, argv);
+    std::string mode, filename, word;
+    try {
+        parseArguments(inputParser, mode, filename, word);
+        if (HELP_MODE == mode) {
+            std::cout << HELP_MESSAGE << std::endl;
+        } else if (CHECKSUM_MODE == mode) {
+            auto checkSum = getFileCheckSum(filename);
+            std::cout << "checkSum:" << checkSum << std::endl;
+        } else if (COUNT_WORDS_MODE == mode) {
+            auto count = getCountWordsInFile(filename, word);
+            std::cout << "count:" << count << std::endl;
+        }
+    } catch (IllegalArgumentsException& e) {
+        std::cout << e.getMessage() << std::endl;
+    } catch (std::ifstream::failure& e){
+        std::cout << e.what() << std::endl;
+    } catch (std::exception& e) {
+        std::cout << e.what() << std::endl;
     }
     return 0;
 }
