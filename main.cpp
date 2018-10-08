@@ -28,8 +28,31 @@ private:
     std::vector<std::string> tokens;
 };
 
-uint32_t getCountWordsInFile(const std::string &filename, const std::string &word) {
-    return 0;
+uint32_t getCountWordsInFile(const std::string& filename, const std::string& word) {
+    std::ifstream fin(filename);
+    if(!fin.is_open()){
+
+    }
+    const auto chunkSize = 16 * 1024;
+    std::vector<char> buffer(chunkSize, 0);
+
+    std::string str;
+    std::unordered_map<std::string, uint32_t> countWords;
+
+    while (fin.read(buffer.data(), buffer.size())) {
+        std::streamsize s = fin.gcount();
+        for (size_t i = 0; i < s; ++i) {
+            if (isalpha(buffer[i])) {
+                str += buffer[i];
+            } else {
+                if (!str.empty()) {
+                    countWords[str]++;
+                    str.clear();
+                }
+            }
+        }
+    }
+    return countWords[word];
 }
 
 uint32_t getFileCheckSum(const std::string &filename) {
