@@ -21,6 +21,7 @@ namespace {
 }
 
 TEST_F(InputParserTest, helpOnlyTest) {
+    //2gis -h
     int argc = 2;
     char **argv = new char *[argc];
     argv[1] = new char[HELP_OPTION.size() + 1];
@@ -30,6 +31,7 @@ TEST_F(InputParserTest, helpOnlyTest) {
 }
 
 TEST_F(InputParserTest, checkSumModeTest) {
+    //2gis -m checksum -f ok.txt
     std::string filename = "ok.txt";
     int argc = 5;
     char **argv = new char *[argc];
@@ -52,6 +54,7 @@ TEST_F(InputParserTest, checkSumModeTest) {
 
 
 TEST_F(InputParserTest, wordsModeTest) {
+    //2gis -m words -f ok.txt -v word
     int argc = 7;
     char **argv = new char *[argc];
     std::string filename = "ok.txt";
@@ -80,6 +83,7 @@ TEST_F(InputParserTest, wordsModeTest) {
 
 
 TEST_F(InputParserTest, wordNotFoundTest) {
+    //2gis -m words -f ok.txt -v
     int argc = 6;
     char **argv = new char *[argc];
     std::string file = "ok.txt";
@@ -104,6 +108,7 @@ TEST_F(InputParserTest, wordNotFoundTest) {
 
 
 TEST_F(InputParserTest, helpOrModeNotFound) {
+    //2gis
     InputParser inputParser(1, nullptr);
     std::string mode, filename, word;
     ASSERT_THROW(Utils::parseArguments(inputParser), IllegalArgumentsException);
