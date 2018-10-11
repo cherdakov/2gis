@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     try {
         auto [mode, filename, word] = Utils::parseArguments(inputParser);
         if (HELP_MODE == mode) {
-            std::cout << REQUIRED_OPTIONS_NOT_FOUND << std::endl;
+            std::cout << HELP_MESSAGE << std::endl;
         } else if (CHECKSUM_MODE == mode) {
             auto checkSum = Utils::getFileCheckSum(filename);
             std::cout << "checkSum:" << checkSum << std::endl;
