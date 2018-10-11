@@ -1,3 +1,7 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+#pragma ide diagnostic ignored "cppcoreguidelines-avoid-goto"
+#pragma ide diagnostic ignored "cert-err58-cpp"
 //
 // Created by cherdakov on 09.10.18.
 //
@@ -12,10 +16,7 @@ using testing::Eq;
 namespace {
     class InputParserTest : public testing::Test {
     public:
-
-        InputParserTest() {
-
-        }
+        InputParserTest() = default;
     };
 }
 
@@ -112,3 +113,5 @@ TEST_F(InputParserTest, helpOrModeNotFound) {
         ASSERT_EQ(REQUIRED_OPTIONS_NOT_FOUND, e.getMessage());
     }
 }
+
+#pragma clang diagnostic pop

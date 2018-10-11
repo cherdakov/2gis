@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err58-cpp"
 //
 // Created by cherdakov on 09.10.18.
 //
@@ -37,3 +39,5 @@ public:
 
 
 #endif //INC_2GIS_UTILS_H
+
+#pragma clang diagnostic pop

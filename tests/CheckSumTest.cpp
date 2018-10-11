@@ -1,3 +1,6 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err58-cpp"
+#pragma ide diagnostic ignored "cppcoreguidelines-avoid-goto"
 //
 // Created by cherdakov on 09.10.18.
 //
@@ -13,9 +16,7 @@ namespace fs = std::experimental::filesystem;
 namespace {
     class CheckSumTest : public testing::Test {
     public:
-        CheckSumTest() {
-
-        }
+        CheckSumTest() = default;
     };
 }
 
@@ -65,3 +66,5 @@ TEST_F(CheckSumTest, emptyFileCheckSumTest) {
     ASSERT_EQ(0, Utils::getFileCheckSum(filename));
     fs::remove(filename);
 }
+
+#pragma clang diagnostic pop
