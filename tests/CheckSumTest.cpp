@@ -43,7 +43,7 @@ TEST_F(CheckSumTest, copyFileTest) {
     fs::remove(copyFileName);
 }
 
-TEST_F(CheckSumTest, precalculateCheckSumTest) {
+TEST_F(CheckSumTest, precalculatedCheckSumTest) {
     std::vector<uint32_t> words;
     uint32_t checksum = 0;
     for (size_t i = 0; i < 1024 * 1024; ++i) {
@@ -51,7 +51,7 @@ TEST_F(CheckSumTest, precalculateCheckSumTest) {
         words.push_back(currentWord);
         checksum += currentWord;
     }
-    std::string filename = "precalculateCheckSumTestFile.txt";
+    std::string filename = "precalculatedCheckSumTestFile.txt";
     std::ofstream file(filename);
     file.write(reinterpret_cast<char *>(words.data()), words.size() * 4);
     ASSERT_EQ(Utils::getFileCheckSum(filename), checksum);
