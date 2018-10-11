@@ -26,7 +26,7 @@ std::tuple<std::string, std::string, std::string> Utils::parseArguments(const In
     std::string mode, filename, word;
     if (inputParser.optionExists(HELP_OPTION)) {
         mode = HELP_MODE;
-        return std::make_tuple(mode, filename, word);
+        return {mode, filename, word};
     }
     if (inputParser.optionExists(MODE_OPTION)) {
         mode = inputParser.getOption(MODE_OPTION);
@@ -50,7 +50,7 @@ std::tuple<std::string, std::string, std::string> Utils::parseArguments(const In
             throw IllegalArgumentsException(EMPTY_WORD);
         }
     }
-    return std::make_tuple(mode, filename, word);
+    return {mode, filename, word};
 }
 
 uint32_t Utils::getCountWordsInFile(const std::string &filename, const std::string &word) {

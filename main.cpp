@@ -22,9 +22,7 @@
 int main(int argc, char **argv) {
     InputParser inputParser(argc, argv);
     try {
-        //TODO:replace with decomposition
-        std::string mode, filename, word;
-        std::tie(mode, filename, word) = Utils::parseArguments(inputParser);
+        auto [mode, filename, word] = Utils::parseArguments(inputParser);
         if (HELP_MODE == mode) {
             std::cout << REQUIRED_OPTIONS_NOT_FOUND << std::endl;
         } else if (CHECKSUM_MODE == mode) {
