@@ -9,14 +9,15 @@
 #include "string"
 
 
-
 class IllegalArgumentsException : public std::exception {
 private:
     std::string message;
 public:
     explicit IllegalArgumentsException(std::string message);
-    const std::string& getMessage() const;
-    const char* what();
+
+    const std::string &getMessage() const;
+
+    const char *what();
 };
 
 #endif //INC_2GIS_ILLEGALARGUMENTSEXCEPTION_H

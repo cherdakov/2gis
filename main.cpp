@@ -34,11 +34,11 @@ int main(int argc, char **argv) {
             auto count = Utils::getCountWordsInFile(filename, word);
             std::cout << "count:" << count << std::endl;
         }
-    } catch (IllegalArgumentsException& e) {
+    } catch (IllegalArgumentsException &e) {
         std::cout << e.getMessage() << std::endl;
-    } catch (std::ifstream::failure& e){
+    } catch (std::ifstream::failure &e) {
         std::cout << e.what() << std::endl;
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
     testing::InitGoogleTest(&argc, argv);

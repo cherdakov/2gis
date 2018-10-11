@@ -45,8 +45,8 @@ TEST_F(CheckSumTest, copyFileTest) {
 TEST_F(CheckSumTest, precalculateCheckSumTest) {
     std::vector<uint32_t> words;
     uint32_t checksum = 0;
-    for (int i = 0; i < 1024 * 1024; ++i) {
-        uint32_t currentWord = rand();
+    for (size_t i = 0; i < 1024 * 1024; ++i) {
+        auto currentWord = static_cast<uint32_t>(rand());
         words.push_back(currentWord);
         checksum += currentWord;
     }

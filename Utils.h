@@ -4,6 +4,7 @@
 
 #ifndef INC_2GIS_UTILS_H
 #define INC_2GIS_UTILS_H
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -28,8 +29,10 @@ const std::string WORD_OPTION = "-v";
 class Utils {
 public:
     static uint32_t getCountWordsInFile(const std::string &filename, const std::string &word);
+
     static uint32_t getFileCheckSum(const std::string &filename);
-    static std::tuple <std::string, std::string, std::string> parseArguments(const InputParser &inputParser);
+
+    static std::tuple<std::string, std::string, std::string> parseArguments(const InputParser &inputParser);
 };
 
 

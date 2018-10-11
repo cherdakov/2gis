@@ -4,6 +4,7 @@
 
 #include "InputParser.h"
 #include <algorithm>
+
 InputParser::InputParser(int argc, char **argv) {
     for (int i = 1; i < argc; ++i) {
         this->tokens.emplace_back(argv[i]);
