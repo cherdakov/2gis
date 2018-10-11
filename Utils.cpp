@@ -14,8 +14,11 @@ uint32_t Utils::getFileCheckSum(const std::string &filename) {
     const auto chunkSize = 16 * 1024;
     std::vector<uint32_t> buffer(chunkSize, 0);
     uint32_t hash = 0;
-    while (fin.read(reinterpret_cast<char *>(buffer.data()), buffer.size())) {
-        std::streamsize index = (fin.gcount() + 3) / 4; //division with rounding
+    while (true) {
+        fin.read(reinterpret_cast<char *>(buffer.data()), buffer.size());
+        std::streamsize readBytesCount = fin.gcount();
+        if(0 == readBytesCount) break;//TODO:move it to condition of while
+        auto index = static_cast<size_t>((readBytesCount + 3) / 4); //division with rounding
         std::for_each(buffer.begin(), buffer.begin() + index, [&hash](uint32_t byte) { hash += byte; });
     }
     return hash;
