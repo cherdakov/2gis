@@ -110,7 +110,6 @@ TEST_F(InputParserTest, wordNotFoundTest) {
 TEST_F(InputParserTest, helpOrModeNotFound) {
     //2gis
     InputParser inputParser(1, nullptr);
-    std::string mode, filename, word;
     ASSERT_THROW(Utils::parseArguments(inputParser), IllegalArgumentsException);
     try {
         Utils::parseArguments(inputParser);
