@@ -6,7 +6,7 @@
 
 IllegalArgumentsException::IllegalArgumentsException(std::string message) : message(std::move(message)) {}
 
-const std::string &IllegalArgumentsException::getMessage() const {
+const std::string& IllegalArgumentsException::getMessage() const {
     return message;
 }
 

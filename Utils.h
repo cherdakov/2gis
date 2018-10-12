@@ -40,11 +40,11 @@ const std::string HELP_MESSAGE = std::string("usage:\n") +
 
 class Utils {
 public:
-    static uint32_t getCountWordsInFile(const std::string &filename, const std::string &word);
+    static uint32_t getCountWordsInFile(const std::string& filename, const std::string& word);
 
-    static uint32_t getFileCheckSum(const std::string &filename);
+    static uint32_t getFileCheckSum(const std::string& filename);
 
-    static std::tuple<std::string, std::string, std::string> parseArguments(const InputParser &inputParser);
+    static std::tuple<std::string, std::string, std::string> parseArguments(const InputParser& inputParser);
 };
 
 

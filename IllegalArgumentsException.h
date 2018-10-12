@@ -15,7 +15,7 @@ private:
 public:
     explicit IllegalArgumentsException(std::string message);
 
-    const std::string &getMessage() const;
+    const std::string& getMessage() const;
 
     const char *what();
 };

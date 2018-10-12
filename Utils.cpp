@@ -6,7 +6,7 @@
 #include <algorithm>
 
 
-uint32_t Utils::getFileCheckSum(const std::string &filename) {
+uint32_t Utils::getFileCheckSum(const std::string& filename) {
     std::ifstream fin(filename);
     if (!fin.is_open()) {
         throw std::runtime_error("file not found");
@@ -17,15 +17,18 @@ uint32_t Utils::getFileCheckSum(const std::string &filename) {
     while (true) {
         fin.read(reinterpret_cast<char *>(buffer.data()), buffer.size());
         std::streamsize readBytesCount = fin.gcount();
-        if(0 == readBytesCount) break;//TODO:move it to condition of while
+        if (0 == readBytesCount) {
+            break;
+        }
         auto index = static_cast<size_t>((readBytesCount + 3) / 4); //division with rounding
+        //best hash_combine in the world
         std::for_each(buffer.begin(), buffer.begin() + index, [&hash](uint32_t byte) { hash += byte; });
     }
     return hash;
 }
 
 
-std::tuple<std::string, std::string, std::string> Utils::parseArguments(const InputParser &inputParser) {
+std::tuple<std::string, std::string, std::string> Utils::parseArguments(const InputParser& inputParser) {
     std::string mode, filename, word;
     if (inputParser.optionExists(HELP_OPTION)) {
         mode = HELP_MODE;
@@ -56,7 +59,7 @@ std::tuple<std::string, std::string, std::string> Utils::parseArguments(const In
     return {mode, filename, word};
 }
 
-uint32_t Utils::getCountWordsInFile(const std::string &filename, const std::string &word) {
+uint32_t Utils::getCountWordsInFile(const std::string& filename, const std::string& word) {
     std::ifstream fin(filename);
     if (!fin.is_open()) {
         throw std::runtime_error("file not found");
@@ -71,7 +74,9 @@ uint32_t Utils::getCountWordsInFile(const std::string &filename, const std::stri
     while (true) {
         fin.read(buffer.data(), buffer.size());
         std::streamsize s = fin.gcount();
-        if (!s) break;
+        if (0 == s) {
+            break;
+        }
         for (size_t i = 0; i < s; ++i) {
             if (isalpha(buffer[i])) {
                 str += buffer[i];

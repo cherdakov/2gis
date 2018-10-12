@@ -101,7 +101,7 @@ TEST_F(InputParserTest, wordNotFoundTest) {
     ASSERT_THROW(Utils::parseArguments(inputParser), IllegalArgumentsException);
     try {
         Utils::parseArguments(inputParser);
-    } catch (IllegalArgumentsException &e) {
+    } catch (IllegalArgumentsException& e) {
         ASSERT_EQ(EMPTY_WORD, e.getMessage());
     }
 }
@@ -113,7 +113,7 @@ TEST_F(InputParserTest, helpOrModeNotFound) {
     ASSERT_THROW(Utils::parseArguments(inputParser), IllegalArgumentsException);
     try {
         Utils::parseArguments(inputParser);
-    } catch (IllegalArgumentsException &e) {
+    } catch (IllegalArgumentsException& e) {
         ASSERT_EQ(REQUIRED_OPTIONS_NOT_FOUND, e.getMessage());
     }
 }

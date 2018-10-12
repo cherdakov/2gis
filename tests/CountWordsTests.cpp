@@ -46,4 +46,5 @@ TEST_F(CountWordsTest, fewShortTests) {
     ASSERT_EQ(Utils::getCountWordsInFile(filename, "Some"), 1);
     fs::remove(filename);
 }
+
 #pragma clang diagnostic pop
