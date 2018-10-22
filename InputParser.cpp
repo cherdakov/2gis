@@ -16,8 +16,7 @@ const std::string& InputParser::getOption(const std::string& option) const {
     if (it != this->tokens.end() && ++it != this->tokens.end()) {
         return *it;
     }
-    static const std::string empty_string; //stranger things
-    return empty_string;
+    return ""; //legally
 }
 
 bool InputParser::optionExists(const std::string& option) const {
